@@ -4,18 +4,18 @@ function __fish_cached --description "Cache the command output for a given amoun
     or return
 
     if set -q _flag_cache_key
-        set cache_key $_flag_cache_key
+        set -f cache_key $_flag_cache_key
     else
-        set cache_key (string split ' ' "$argv" | head -1)
+        set -f cache_key (string split ' ' "$argv" | head -1)
     end
     if set -q _flag_max_age
-        set max_age $_flag_max_age
+        set -f max_age $_flag_max_age
     else
-        set max_age -1
+        set -f max_age -1
     end
-    set cache_dir (__fish_make_cache_dir)
-    set cache_file (path normalize $cache_dir/$cache_key)
-    set cache_age (path mtime --relative $cache_file)
+    set -l cache_dir (__fish_make_cache_dir)
+    set -l cache_file (path normalize $cache_dir/$cache_key)
+    set -l cache_age (path mtime --relative $cache_file)
 
     if not test -f $cache_file
         or test $cache_age -gt $max_age
